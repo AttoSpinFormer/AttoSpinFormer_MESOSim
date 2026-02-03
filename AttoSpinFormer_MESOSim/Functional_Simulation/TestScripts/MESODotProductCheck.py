@@ -85,9 +85,9 @@ print("--------------------------------------------------")
 
 while True:
 	try:
-		bit_width_input = input("Enter the required bit width (2<= Input <=32): ")
+		bit_width_input = input("Enter the required bit width (4<= Input <=64): ")
         
-		bit_width = int(bit_width_input)
+		bit_width = int(int(bit_width_input)/2)
         
 		if 1 < bit_width < 33:
 			break
@@ -98,7 +98,7 @@ while True:
 		print("Invalid input. Please enter an integer.")
 
 
-print(f"Bit-width selected: {bit_width}\n")
+print(f"Bit-width selected: {bit_width_input}\n")
 print("\n" + "-"*60 + "\n")
 
 
@@ -255,7 +255,7 @@ def run(sizeL,Depth,batch,num_tests,sim_mode,mode,r1,r2,bit_width):
 			#Compute relative L1 error (%) for each batch element. 
 			ErrorC = (torch.abs(OutNew - Output).sum(dim=(1,2)) * 100) / torch.abs(OutNew).sum(dim=(1,2))
 	
-			print(f"Test batch: {test}, mode: {mode}, bit-width: {bit_width}, sequence len: {sizeL}, depth: {Depth}, ErrorC: {ErrorC.mean():.4f}%")	
+			print(f"Test batch: {test}, mode: {mode}, bit-width: {bit_width_input}, sequence len: {sizeL}, depth: {Depth}, ErrorC: {ErrorC.mean():.4f}%")	
 			
 			#Accumulate the per-test error into a running total and compute the average error over all tests for a user-defined sequence length and depth..
 			ErrorTot+=ErrorC.mean()
@@ -301,7 +301,7 @@ def run(sizeL,Depth,batch,num_tests,sim_mode,mode,r1,r2,bit_width):
 				#Compute relative L1 error (%) for each batch element.
 				ErrorC = (torch.abs(OutNew - Output).sum(dim=(1,2)) * 100) / torch.abs(OutNew).sum(dim=(1,2))
 			
-				print(f"Test batch: {test}, mode: {mode}, bit-width: {bit_width}, sequence len: {sizeL}, depth: {Depth}, ErrorC: {ErrorC.mean():.4f}%")	
+				print(f"Test batch: {test}, mode: {mode}, bit-width: {bit_width_input}, sequence len: {sizeL}, depth: {Depth}, ErrorC: {ErrorC.mean():.4f}%")	
 
 				#Accumulate the per-test error into a running total and compute the average error over all tests for the current sequence length and depth.
 				ErrorTot+=ErrorC.mean()
